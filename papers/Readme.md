@@ -12,6 +12,8 @@ The vacation booking example illustrates how these enhancements reduce risks and
 proposal to strengthen A2A’s position as a leading standard for agent communication.
 
 
+## https://arxiv.org/pdf/2504.16902
+
 
 
 
@@ -47,3 +49,6 @@ work will focus on advancing LOKA from a conceptual framework to a robust implem
 development, real-world simulations, and cross-disciplinary collaboration. By doing so, we aim to establish a foundational layer for responsible, decentralized AI governance capable of shaping the next generation of
 autonomous systems in a secure, ethical, and globally inclusive manner.
 
+## https://arxiv.org/pdf/2505.08446
+Initiatives like A2A and MCP are crucial, but their evolution must prioritize security considerations, potentially incorporating
+lessons from Zero Trust architectures adapted for agentspecific contexts.

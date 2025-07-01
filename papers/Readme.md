@@ -32,3 +32,18 @@ multi-agent collective inference. Our ACP-powered generalist multi-agent
 systems achieve state-of-the-art (SOTA) results: 28.3% accuracy on AssistantBench for long-horizon web assistance and best-in-class multimodal
 technical reports, outperforming commercial AI systems as evaluated by
 humans. ACPs are highly modular and extensible, and enables practitioners to rapidly develop best-in-class generalist systems.
+
+## https://arxiv.org/pdf/2504.10915
+The LOKA Protocol presents a unified and forward-looking framework for addressing the foundational
+challenges of interoperability, security, and ethical
+alignment in multi-agent AI systems. Through the introduction of a proposed Universal Agent Identity Layer,
+intent-centric communication protocols, and a Decentralized Ethical Consensus Protocol, LOKA proposes
+a novel systems-level architecture for enabling trustworthy, autonomous, and collaborative AI agent ecosystems. While
+the theoretical foundations of LOKA offer a compelling vision, several challenges remain. First, the scalability and
+practical deployment of the protocol in large, heterogeneous agent environments require rigorous
+empirical validation. Second, defining and operationalizing ethical consensus across culturally and legally diverse
+contexts poses a complex sociotechnical challenge. Third, ensuring long-term cryptographic resilience will demand ongoing research and adaptive security strategies. Future
+work will focus on advancing LOKA from a conceptual framework to a robust implementation through prototype
+development, real-world simulations, and cross-disciplinary collaboration. By doing so, we aim to establish a foundational layer for responsible, decentralized AI governance capable of shaping the next generation of
+autonomous systems in a secure, ethical, and globally inclusive manner.
+

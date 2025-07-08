@@ -1,2 +1,7 @@
 .env
 venv
+__pycache__
+Phoenix/__pycache__
+**/.DS_Store
+Phoenix/helper.py
+Phoenix/utils.py

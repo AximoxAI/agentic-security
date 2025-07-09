@@ -6,6 +6,7 @@ __pycache__/
 *.pyd
 
 utils.py
+utils2.py
 helper.py
 
 .DS_Store

@@ -5,10 +5,5 @@ __pycache__/
 *.pyo
 *.pyd
 
-utils.py
-utils2.py
-utils3.py
-helper.py
-
 .DS_Store
 **/.DS_Store

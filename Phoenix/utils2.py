@@ -29,7 +29,7 @@ from phoenix.experiments.evaluators import create_evaluator
 import nest_asyncio
 nest_asyncio.apply()
 
-from helper import get_openai_api_key ,get_phoenix_endpoint 
+from DSPy.helper import get_openai_api_key ,get_phoenix_endpoint 
 
 
 

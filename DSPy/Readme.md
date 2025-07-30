@@ -1,131 +1,134 @@
 # Healthcare Database Query System with DSPy
 
-A natural language query system for healthcare patient data using DSPy framework and SQLite database.
+A natural language query system for healthcare patient data using DSPy framework, LLM-powered SQL generation, and SQLite database.
 
 ## Overview
 
-This system allows users to query patient healthcare data using natural language queries. It leverages the DSPy framework to parse user queries and translate them into structured database searches, making healthcare data more accessible without requiring SQL knowledge.
+This system allows users to query patient healthcare data using natural language queries. It leverages the DSPy framework with LLM-powered SQL generation to translate natural language into structured database queries, making healthcare data more accessible without requiring SQL knowledge.
 
 ## Features
 
 - **Natural Language Processing**: Query patient data using plain English
-- **Flexible Filtering**: Search by medical condition, age, gender, test results, and admission year
+- **LLM-Powered SQL Generation**: Automatically converts natural language to SQL queries
+- **Flexible Database Querying**: Support for complex queries through generated SQL
 - **Structured Output**: Returns formatted patient information with key details
 - **SQLite Integration**: Efficient local database storage and querying
 
 ## Key Components
 
-### 1. HealthcareDBTool Class
-- **Purpose**: Handles database operations and query construction
+### 1. TextToSql Class (DSPy Signature)
+- **Purpose**: Defines the signature for converting natural language queries into SQL queries
+- **Inputs**: Natural language query and database schema context
+- **Output**: Generated SQL query string
+
+### 2. HealthcareDBTool Class
+- **Purpose**: Handles LLM-powered SQL generation and database operations
 - **Key Methods**:
-  - `build_where_clause()`: Constructs SQL WHERE clauses from filters
-  - `search_patients()`: Executes database queries with optional filters
+  - `get_schema_context()`: Provides database schema information for context
+  - `generate_sql_query()`: Uses LLM to convert natural language to SQL
+  - `execute_sql_query()`: Executes generated SQL queries safely
+  - `search_patients_with_llm()`: Complete pipeline for LLM-based patient search
 
-### 2. PatientSearchModule Class
-- **Purpose**: DSPy module that processes natural language queries
+### 3. PatientSearchModule Class
+- **Purpose**: DSPy module that orchestrates the complete search process
 - **Key Methods**:
-  - `forward()`: Main processing pipeline
-  - `_parse_query()`: Extracts parameters from natural language using regex
+  - `forward()`: Main processing pipeline that generates SQL and formats results
 
-### 3. Query Parameters Supported
-- **condition**: Medical conditions (cancer, diabetes, hypertension, asthma, arthritis)
-- **year**: Admission year (format: 2019-2024)
-- **age_min**: Minimum age threshold
-- **gender**: Patient gender (male/female)
-- **test_result**: Test result status (normal/abnormal)
+### 4. Database Schema
+The system works with a `patients` table containing:
+- **Name** (TEXT): Patient's full name
+- **Medical Condition** (TEXT): Patient's medical condition (Cancer, Diabetes, Hypertension, Asthma, Arthritis)
+- **Medication** (TEXT): Prescribed medication
+- **Test Results** (TEXT): Test results (Normal, Abnormal, Inconclusive)
+- **Age** (INTEGER): Patient's age
+- **Gender** (TEXT): Patient's gender (Male, Female)
+- **Date of Admission** (TEXT): Date of admission in YYYY-MM-DD format
 
-## Usage Procedure
 
-### Step 1: Data Preparation
-The system loads healthcare data from CSV and preprocesses it by:
-- Reading the CSV file using pandas
-- Removing unnecessary columns (Billing Amount, Room Number, Insurance Provider, Doctor, Hospital)
-- Converting to SQLite database for efficient querying
+## Example Queries and Results
 
-### Step 2: Database Creation
-```python
-df = create_data()
-db_path = 'healthcare.db'
-conn = sqlite3.connect(db_path)
-df.to_sql('patients', conn, if_exists='replace', index=False)
-```
-
-### Step 3: Query Processing Pipeline
-1. **Input**: Natural language query (e.g., "Find patients with abnormal results in 2024")
-2. **Parsing**: Extract parameters using regex patterns
-3. **Database Query**: Build and execute SQL query with extracted filters
-4. **Output**: Formatted patient information
-
-### Step 4: Results Formatting
-Results include:
-- Patient name
-- Medical condition
-- Age and gender
-- Test results
-- Admission date
-
-## Example Queries
-
-The system can handle queries like:
+The system can handle complex natural language queries:
 
 ```python
 test_queries = [
-    "Find patients with abnormal results in 2024",
+    "Find patients with abnormal test results in 2024",
     "List all cancer patients above age 40", 
     "Who was admitted for diabetes in 2022?",
-    "List female patients whose test results are abnormal"
+    "List female patients whose test results are abnormal",
+    "Show me all patients with hypertension who are male",
+    "Find patients admitted between 2021 and 2023 with normal test results"
 ]
 ```
 
-## Sample Output
+### Sample Output
 
 ```
 Query: List all cancer patients above age 40
 ----------------------------------------
+Generated SQL: SELECT * FROM patients 
+WHERE "Medical Condition" = 'Cancer' 
+AND Age > 40 
+LIMIT 100;
+
 Found patients:
 1. adrIENNE bEll - Cancer (Age: 43, Gender: Female, Test Results: Abnormal, Admission: 2022-09-19)
 2. ChRISTopher BerG - Cancer (Age: 58, Gender: Female, Test Results: Inconclusive, Admission: 2021-05-23)
+3. mIchElLe daniELs - Cancer (Age: 72, Gender: Male, Test Results: Normal, Admission: 2020-04-19)
 ...
 ```
 
 ## Technical Implementation
 
-### Query Parsing Strategy
-The system uses regex patterns to extract:
-- **Years**: `\b(20\d{2})\b` pattern
-- **Ages**: `above age (\d+)|age (\d+)` pattern  
-- **Conditions**: Direct string matching against known conditions
-- **Gender/Results**: Keyword-based detection
+### LLM-Powered SQL Generation
+The system uses a sophisticated approach:
+- **Schema Context**: Provides detailed database schema information to the LLM
+- **Natural Language Processing**: LLM understands complex queries and relationships
+- **SQL Generation**: Produces syntactically correct SQL with proper column quoting
+- **Safety Features**: Automatic LIMIT clause addition to prevent excessive results
 
-### Database Schema
-The SQLite database contains a `patients` table with columns:
-- Name, Medical Condition, Medication
-- Test Results, Age, Gender
-- Date of Admission
+### Query Processing Features
+- **Case-insensitive matching**: Uses LOWER() for string comparisons
+- **Partial matching**: Supports LIKE with wildcards
+- **Date extraction**: Uses strftime() for date-based queries
+- **Column name handling**: Properly quotes column names with spaces
+- **Error handling**: Comprehensive error management for database operations
 
-## Configuration
+### Database Schema Context
+The system provides rich context to the LLM including:
+- Complete table schema with column types
+- Important notes about column naming conventions
+- SQL best practices for the specific schema
+- Performance optimization guidelines
 
-Set up your OpenAI API key in `helper.py`:
-```python
-openai_api_key = "your-api-key-here"
-```
+## Error Handling and Safety
 
-Configure DSPy with your preferred language model:
-```python
-dspy.settings.configure(lm=dspy.LM("openai/gpt-4o-mini"))
-```
+- **SQL Injection Prevention**: Uses parameterized queries and LLM-generated SQL
+- **Result Limiting**: Automatic LIMIT clauses prevent excessive data retrieval
+- **Database Error Handling**: Comprehensive exception handling for database operations
+- **Query Validation**: Clean-up and validation of generated SQL queries
+
+## Advantages Over Traditional Approaches
+
+1. **Flexibility**: Can handle complex, multi-condition queries naturally
+2. **Scalability**: LLM can adapt to new query patterns without code changes
+3. **User-Friendly**: No SQL knowledge required from end users
+4. **Maintainable**: Schema changes can be handled by updating context information
+5. **Extensible**: Easy to add new query capabilities through prompt engineering
 
 ## Limitations
 
-- Query parsing relies on simple regex patterns
-- Limited to predefined medical conditions
-- Requires specific date formats and keywords
-- No fuzzy matching for patient names or conditions
+- **LLM Dependency**: Requires API access to language models
+- **Cost Considerations**: API calls for each query may incur costs
+- **Response Time**: LLM processing adds latency compared to direct SQL
+- **Data Privacy**: Queries are processed by external LLM services
+- **Schema Dependency**: Changes in database schema require context updates
 
 ## Future Enhancements
 
-- Advanced NLP for better query understanding
-- Support for more complex queries and conditions
-- Integration with medical ontologies
-- Enhanced error handling and validation
-- Web interface for easier access
+- **Query Optimization**: Cache common SQL patterns to reduce LLM calls
+- **Local LLM Support**: Integration with local language models for privacy
+- **Advanced Analytics**: Support for aggregation and statistical queries
+- **Multi-table Joins**: Expand to support complex multi-table relationships
+- **Query History**: Store and learn from previous successful queries
+- **Web Interface**: Browser-based interface for easier access
+- **Real-time Updates**: Support for live database updates and notifications

@@ -7,7 +7,7 @@ import json
 import duckdb
 from pydantic import BaseModel, Field
 
-from helper import get_openai_api_key, get_phoenix_endpoint
+from DSPy.helper import get_openai_api_key, get_phoenix_endpoint
 
 import phoenix as px
 from phoenix.otel import register

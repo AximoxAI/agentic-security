@@ -20,7 +20,7 @@ from phoenix.evals import llm_classify
 
                                                                                                                                     
 
-from DSPy.helper import get_openai_api_key ,get_phoenix_endpoint 
+from helper import get_openai_api_key ,get_phoenix_endpoint 
 
 
 # initialize the OpenAI client

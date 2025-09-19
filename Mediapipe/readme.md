@@ -214,6 +214,8 @@ def main(video_path):
             break
 ```
 
+![alt text](image.png)
+
 **Video Processing Flow:**
 1. **Frame capture**: `cap.read()` gets next frame
 2. **Processing**: Run through pose detection pipeline  

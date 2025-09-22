@@ -29,7 +29,7 @@ from phoenix.experiments.evaluators import create_evaluator
 import nest_asyncio
 nest_asyncio.apply()
 
-from DSPy.helper import get_openai_api_key ,get_phoenix_endpoint 
+from helper import get_openai_api_key ,get_phoenix_endpoint 
 
 
 
@@ -56,7 +56,7 @@ MODEL = "gpt-4o-mini"
 # Defining the tools
 
 # Tool 1: Database Lookup
-TRANSACTION_DATA_FILE_PATH = './data/Store_Sales_Price_Elasticity_Promotions_Data.parquet'
+TRANSACTION_DATA_FILE_PATH = "/Users/priyanka./Documents/agentic-security/Phoenix/Store_Sales_Price_Elasticity_Promotions_Data.parquet"
 
 # prompt template for step 2 of tool 1
 SQL_GENERATION_PROMPT = """

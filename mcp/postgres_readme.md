@@ -1,4 +1,4 @@
-# Supercharging Postgres with AI Agents, MCP, and Arize Phoenix
+# Supercharging PostgreSQL with AI Agents, MCP, and Arize Phoenix
 
 
 As AI agents become increasingly prevalent in enterprise applications, the critical challenge shifts from building functional prototypes to creating reliable, observable, and trustworthy systems that can handle real-world data complexity. 

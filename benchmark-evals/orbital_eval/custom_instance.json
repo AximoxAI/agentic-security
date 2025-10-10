@@ -1,0 +1,10 @@
+{
+  "instance_id": "AximoxAI_orbital_123",
+  "repo": "AximoxAI/orbital",
+  "base_commit": "94ffdfd",  
+  "problem_statement": "Describe your bug or feature request here.",
+  "hints_text": "Any hints or context.",
+  "patch": "Your unified diff patch here.",
+  "test_patch": "Relevant unit test patch if needed.",
+  "environment_setup_commit": "94ffdfd"
+}
